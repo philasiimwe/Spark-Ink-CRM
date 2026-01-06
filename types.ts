@@ -1,43 +1,50 @@
-
-export type Stage = 'LEAD' | 'CONTACTED' | 'PROPOSAL' | 'NEGOTIATION' | 'CLOSED_WON' | 'CLOSED_LOST';
-export type DealPriority = 'HOT' | 'WARM' | 'COLD';
-export type DealSource = 'WEBSITE' | 'REFERRAL' | 'COLD_OUTREACH' | 'PARTNER' | 'MARKETING' | 'OTHER';
+export type Stage = 'lead' | 'contacted' | 'proposal' | 'negotiation' | 'won' | 'lost';
+export type DealPriority = 'low' | 'medium' | 'high' | 'urgent';
+export type DealSource = 'website' | 'referral' | 'cold_outreach' | 'partner' | 'marketing' | 'other';
 
 export interface Contact {
   id: string;
-  firstName: string;
-  lastName: string;
-  name: string;
+  first_name: string;
+  last_name: string;
   email: string;
   phone: string;
-  phoneCountryCode: string;
+  phone_country_code?: string;
   company: string;
-  jobTitle: string;
-  linkedinUrl?: string;
-  twitterUrl?: string;
+  job_title: string;
+  linkedin_url?: string;
+  twitter_url?: string;
   location?: string;
   industry?: string;
-  companySize?: string;
+  company_size?: string;
   website?: string;
-  annualRevenue?: string;
+  annual_revenue?: number;
+  tags?: string[];
+  status?: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface Activity {
   id: string;
-  dealId: string;
-  type: 'CALL' | 'EMAIL' | 'MEETING' | 'TASK';
+  deal_id?: string;
+  contact_id?: string;
+  account_id?: string;
+  type: 'call' | 'email' | 'meeting' | 'task' | 'note' | 'sms' | 'whatsapp';
   subject: string;
-  dueDate: string;
-  status: 'PENDING' | 'COMPLETED';
-  notes?: string;
-  duration?: string;
+  due_date?: string;
+  status: 'pending' | 'completed' | 'cancelled';
+  description?: string;
+  duration_minutes?: number;
+  outcome?: string;
+  created_at?: string;
 }
 
 export interface TeamMember {
   id: string;
-  name: string;
+  first_name: string;
+  last_name: string;
   role: string;
-  avatar?: string;
+  avatar_url?: string;
 }
 
 export interface Deal {
@@ -45,19 +52,20 @@ export interface Deal {
   title: string;
   value: number;
   currency: string;
-  contactId: string;
-  ownerId: string;
+  contact_id?: string;
+  owner_id: string;
   stage: Stage;
-  createdAt: string;
-  updatedAt: string;
+  status: 'open' | 'won' | 'lost' | 'abandoned';
+  created_at: string;
+  updated_at: string;
   probability: number;
-  expectedCloseDate?: string;
+  expected_close_date?: string;
   priority: DealPriority;
-  source: DealSource;
-  notes?: string;
-  lossReason?: string;
+  source?: string;
+  description?: string;
+  loss_reason?: string;
   tags: string[];
-  isFollowed: boolean;
+  is_followed: boolean;
 }
 
 export interface CRMState {
